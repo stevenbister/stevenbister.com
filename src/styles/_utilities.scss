@@ -59,6 +59,14 @@ $display: 'block', 'inline', 'inline-block', 'flex', 'inline-flex' 'grid';
   }
 }
 
+$flex_pos: 'flex-start', 'flex-end', 'center', 'space-between', 'space-around',
+  'space-evenly';
+@each $justify in $flex_pos {
+  .justify-#{$justify} {
+    justify-content: #{$justify};
+  }
+}
+
 /* ---------------------------------------
   Position
 --------------------------------------- */
