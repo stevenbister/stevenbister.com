@@ -1,8 +1,10 @@
 :root {
   /* Colours */
   --color-dark: hsl(0deg 0% 13%);
-  --color-light: hsl(0deg 0% 94%);
+  --color-light: hsl(0deg 0% 97%);
   --color-grey: hsl(0deg 0% 77%);
+  --color-site-bg: var(--color-light);
+  --color-text-primary: var(--color-dark);
 
   /*
     Typography

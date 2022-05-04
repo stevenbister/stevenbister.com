@@ -1,3 +1,30 @@
+@font-face {
+  font-display: swap;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/Inter-Regular.woff2') format('woff2'),
+    url('/fonts/Inter-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  src: url('/fonts/Inter-Bold.woff2') format('woff2'),
+    url('/fonts/Inter-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/Inter-Medium.woff2') format('woff2'),
+    url('/fonts/Inter-Medium.woff') format('woff');
+}
+
 :focus {
   outline-offset: 0.2rem;
 }
@@ -7,12 +34,23 @@
 }
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 body {
+  background-color: var(--color-site-bg);
+  color: var(--color-text-primary);
   font-size: var(--step-0);
+  letter-spacing: -0.04em;
+}
+
+/* stylelint-disable-next-line selector-id-pattern */
+#__next {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
 }
 
 h1,
