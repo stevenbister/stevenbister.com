@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "next lint"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
     "eslint-config-next": "12.1.5",
     "eslint-plugin-testing-library": "^5.3.1",
     "jest": "^28.0.2",
+    "jest-environment-jsdom": "^28.0.2",
     "sass": "^1.51.0",
     "stylelint": "^14.8.0",
     "stylelint-config-idiomatic-order": "^8.1.0",
