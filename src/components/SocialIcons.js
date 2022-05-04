@@ -10,6 +10,7 @@ const SocialIcons = ({ links }) => {
         <li key={key} style={{ marginInline: 'var(--space-2xs)' }}>
           <a href={value} style={{ color: 'var(--color-text-primary)' }}>
             {key === 'LinkedIn' ? <FaLinkedin /> : <FaGithub />}
+            <span className="sr-only">{key}</span>
           </a>
         </li>
       ))}
