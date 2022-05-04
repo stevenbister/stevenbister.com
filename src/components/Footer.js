@@ -5,7 +5,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer>
+    <footer className="footer container align-center">
       &copy;{year} {SITE_NAME}
     </footer>
   );

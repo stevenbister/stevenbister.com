@@ -7,11 +7,13 @@ const Header = () => {
   const { SITE_NAME } = CONSTANTS();
 
   return (
-    <header className="header">
+    <header className="header container">
       {router.asPath === '/' ? (
-        <h1>
+        <h1 className="fs-1 fw-400">
           <Link href="/">
-            <a aria-current="page">{SITE_NAME}</a>
+            <a aria-current="page" className="decorate-none">
+              {SITE_NAME}
+            </a>
           </Link>
         </h1>
       ) : (
