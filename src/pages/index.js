@@ -16,10 +16,6 @@ export default function Home() {
       <HomeContent
         intro="Hello! Welcome to my site, it's under contstruction at the moment
           so please excuse the mess."
-        links={{
-          LinkedIn: LINKEDIN,
-          GitHub: GITHUB,
-        }}
       />
     </>
   );

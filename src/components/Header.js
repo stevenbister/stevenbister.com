@@ -7,7 +7,7 @@ const Header = () => {
   const { SITE_NAME } = CONSTANTS();
 
   return (
-    <header className="header container">
+    <header className="container box">
       {router.asPath === '/' ? (
         <h1 className="fs-1 fw-400">
           <Link href="/">
