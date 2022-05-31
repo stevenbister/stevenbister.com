@@ -17,9 +17,11 @@ const Header = () => {
           </Link>
         </h1>
       ) : (
-        <Link href="/">
-          <a>Header</a>
-        </Link>
+        <p className="fs-1 fw-400">
+          <Link href="/">
+            <a className="decorate-none">{SITE_NAME}</a>
+          </Link>
+        </p>
       )}
     </header>
   );
