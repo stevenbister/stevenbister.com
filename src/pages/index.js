@@ -3,7 +3,7 @@ import CONSTANTS from '@/lib/constants';
 import HomeContent from '@/components/HomeContent';
 
 export default function Home() {
-  const { SITE_NAME, LINKEDIN, GITHUB } = CONSTANTS();
+  const { SITE_NAME } = CONSTANTS();
 
   return (
     <>
