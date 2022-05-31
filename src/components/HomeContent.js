@@ -1,12 +1,8 @@
-import SocialIcons from './SocialIcons';
-
-const HomeContent = ({ intro, links }) => {
+const HomeContent = ({ intro }) => {
   return (
-    <div className="container cover">
+    <div className="container box cover">
       <div className="stack align-center">
         <p className="content">{intro}</p>
-
-        <SocialIcons links={links} />
       </div>
     </div>
   );
