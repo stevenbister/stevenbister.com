@@ -1,9 +1,8 @@
 import Head from 'next/head';
 import CONSTANTS from '@/lib/constants';
-import HomeContent from '@/components/HomeContent';
 
 export default function Home() {
-  const { SITE_NAME, LINKEDIN, GITHUB } = CONSTANTS();
+  const { SITE_NAME } = CONSTANTS();
 
   return (
     <>
@@ -13,14 +12,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HomeContent
-        intro="Hello! Welcome to my site, it's under contstruction at the moment
-          so please excuse the mess."
-        links={{
-          LinkedIn: LINKEDIN,
-          GitHub: GITHUB,
-        }}
-      />
+      <div className="container box">
+        <div className="stack" style={{ width: '100%', maxWidth: '74ch' }}>
+          <p className="fs-4 fw-600">Hello, I&apos;m Steven</p>
+          <p className="fs-1">I&apos;m a frontend web developer</p>
+          <p className="fs-1">
+            This is my little piece of the internet. I&apos;ll probably use this
+            to do little case studies of my personal projects and maybe share
+            some code snippets. But generally this will just be my playground
+            for trying out new things.
+          </p>
+        </div>
+      </div>
     </>
   );
 }
