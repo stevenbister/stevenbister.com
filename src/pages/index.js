@@ -14,13 +14,13 @@ export default function Home() {
 
       <div className="container box">
         <div className="stack" style={{ width: '100%', maxWidth: '74ch' }}>
-          <p className="fs-4 fw-600">Hello, I'm Steven</p>
-          <p className="fs-1">I'm a frontend web developer</p>
+          <p className="fs-4 fw-600">Hello, I&apos;m Steven</p>
+          <p className="fs-1">I&apos;m a frontend web developer</p>
           <p className="fs-1">
-            This is my little piece of the internet. I'll probably use this to
-            do little case studies of my personal projects and maybe share some
-            code snippets. But generally this will just be my playground for
-            trying out new things.
+            This is my little piece of the internet. I&apos;ll probably use this
+            to do little case studies of my personal projects and maybe share
+            some code snippets. But generally this will just be my playground
+            for trying out new things.
           </p>
         </div>
       </div>
