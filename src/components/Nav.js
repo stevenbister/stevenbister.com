@@ -5,8 +5,8 @@ const Nav = () => {
     <nav>
       <ul className="cluster">
         <li>
-          <Link href="/portfolio">
-            <a>Portfolio</a>
+          <Link href="/projects">
+            <a>Projects</a>
           </Link>
         </li>
       </ul>
