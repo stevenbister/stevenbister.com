@@ -12,9 +12,12 @@ const Page = ({ page }) => {
         <title>
           {page.title} | {SITE_NAME}
         </title>
+
         {page.excerpt ? (
           <meta name="description" content={page.excerpt} />
         ) : null}
+
+        {page.noindex ? <meta name="robots" content="noindex" /> : null}
       </Head>
       <article className="container box">
         <h1>{page.title}</h1>
@@ -29,7 +32,7 @@ export default Page;
 export async function getStaticProps({ params }) {
   const slug = params.slug.join('/'); // Rebuild our slug so we can take subdirectories into account
 
-  const page = getPageBySlug(slug, ['title', 'content', 'excerpt']);
+  const page = getPageBySlug(slug, ['title', 'content', 'excerpt', 'noindex']);
 
   const content = await markdownToHtml(page.content || '');
 
