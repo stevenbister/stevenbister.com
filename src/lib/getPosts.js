@@ -6,13 +6,38 @@ import matter from 'gray-matter';
  * https://github.com/vercel/next.js/tree/canary/examples/blog-starter
  */
 
+const pagesDir = join(process.cwd(), '_pages');
+
 /**
- * Generate page slugs based on the page names
+ * Recursively loop through the pagesDir and generate an array of
+ * all of the pages within it.
  *
  * @returns {Array} Array of filenames found in the pagesDir
  */
-const pagesDir = join(process.cwd(), '_pages');
-const getFiles = () => fs.readdirSync(pagesDir);
+const getFiles = (dirPath, arrayOfFiles) => {
+  dirPath = dirPath || pagesDir;
+  arrayOfFiles = arrayOfFiles || [];
+
+  const files = fs.readdirSync(dirPath);
+
+  files.forEach((file) => {
+    if (fs.statSync(dirPath + '/' + file).isDirectory()) {
+      arrayOfFiles = getFiles(dirPath + '/' + file, arrayOfFiles);
+    } else {
+      let tidyDirPath = dirPath.replace(join(process.cwd(), '_pages'), '');
+
+      if (tidyDirPath.substring(0, 1) === '/') {
+        tidyDirPath = tidyDirPath.replace('/', '');
+      }
+
+      tidyDirPath
+        ? arrayOfFiles.push(join(tidyDirPath, '/', file))
+        : arrayOfFiles.push(file);
+    }
+  });
+
+  return arrayOfFiles;
+};
 
 /**
  *  Generate the page content as an object
@@ -54,11 +79,9 @@ const getPageBySlug = (slug, fields = []) => {
  * @returns {Array} Array of objects containing the fields passed
  */
 const getAllPages = (fields = []) => {
-  const slugs = getFiles();
+  const slugs = getFiles(pagesDir);
 
-  const pages = slugs
-    .map((slug) => getPageBySlug(slug, fields))
-    .sort((page1, page2) => page1.localeCompare(page2));
+  const pages = slugs.map((slug) => getPageBySlug(slug, fields));
 
   return pages;
 };
