@@ -24,7 +24,7 @@ const Page = ({ page }) => {
       <article className="container box">
         <h1>{page.title}</h1>
 
-        {page.excerpt ? <p>{page.excerpt}</p> : null}
+        {page.excerpt ? <p className="fs-1">{page.excerpt}</p> : null}
 
         {/* TODO: Split this out into a separate component probably */}
         {page.link || page.github ? (

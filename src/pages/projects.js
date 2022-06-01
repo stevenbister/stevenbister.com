@@ -21,7 +21,7 @@ const Projects = ({ projectItems }) => {
             {projectItems.map((item) => (
               <li key={item.slug.join('-')}>
                 <Link href={`/${item.slug.join('/')}`}>
-                  <a>{item.title}</a>
+                  <a className="fs-1">{item.title}</a>
                 </Link>
                 <p>{item.excerpt}</p>
               </li>
