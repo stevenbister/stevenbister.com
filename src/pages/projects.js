@@ -17,12 +17,13 @@ const Projects = ({ projectItems }) => {
       <article className="container box">
         <h1>Projects</h1>
         {projectItems.length > 0 ? (
-          <ul>
+          <ul className="stack">
             {projectItems.map((item) => (
               <li key={item.slug.join('-')}>
                 <Link href={`/${item.slug.join('/')}`}>
                   <a>{item.title}</a>
                 </Link>
+                <p>{item.excerpt}</p>
               </li>
             ))}
           </ul>

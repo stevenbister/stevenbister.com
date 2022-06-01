@@ -13,6 +13,8 @@ const Page = ({ page }) => {
           {page.title} | {SITE_NAME}
         </title>
 
+        {/* TODO: Canonical tag */}
+
         {page.excerpt ? (
           <meta name="description" content={page.excerpt} />
         ) : null}
@@ -21,7 +23,31 @@ const Page = ({ page }) => {
       </Head>
       <article className="container box">
         <h1>{page.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: page.content }} />
+
+        {page.excerpt ? <p>{page.excerpt}</p> : null}
+
+        {/* TODO: Split this out into a separate component probably */}
+        {page.link || page.github ? (
+          <ul>
+            {page.link ? (
+              <li>
+                <a href={page.link}>Site</a>
+              </li>
+            ) : null}
+
+            {page.github ? (
+              <li>
+                <a href={page.github}>GitHub</a>
+              </li>
+            ) : null}
+          </ul>
+        ) : null}
+
+        <div
+          className="stack"
+          style={{ maxWidth: '74ch' }}
+          dangerouslySetInnerHTML={{ __html: page.content }}
+        />
       </article>
     </>
   );
@@ -32,7 +58,14 @@ export default Page;
 export async function getStaticProps({ params }) {
   const slug = params.slug.join('/'); // Rebuild our slug so we can take subdirectories into account
 
-  const page = getPageBySlug(slug, ['title', 'content', 'excerpt', 'noindex']);
+  const page = getPageBySlug(slug, [
+    'title',
+    'content',
+    'excerpt',
+    'link',
+    'github',
+    'noindex',
+  ]);
 
   const content = await markdownToHtml(page.content || '');
 
