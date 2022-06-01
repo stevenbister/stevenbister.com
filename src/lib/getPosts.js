@@ -85,7 +85,10 @@ const getAllPages = (fields = []) => {
   // see: https://nextjs.org/learn/basics/dynamic-routes/dynamic-routes-details
   const pages = slugs
     .map((slug) => getPageBySlug(slug, fields))
-    .map((page) => page.slug.split('/'));
+    .map((page) => ({
+      ...page,
+      slug: page.slug.split('/'),
+    }));
 
   return pages;
 };

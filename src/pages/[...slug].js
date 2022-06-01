@@ -49,7 +49,7 @@ export async function getStaticPaths() {
   const paths = pages.map((page) => {
     return {
       params: {
-        slug: page,
+        slug: page.slug,
       },
     };
   });
