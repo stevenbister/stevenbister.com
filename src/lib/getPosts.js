@@ -81,7 +81,11 @@ const getPageBySlug = (slug, fields = []) => {
 const getAllPages = (fields = []) => {
   const slugs = getFiles(pagesDir);
 
-  const pages = slugs.map((slug) => getPageBySlug(slug, fields));
+  // Separate the slug out into an array so we can make use of dynamic routes
+  // see: https://nextjs.org/learn/basics/dynamic-routes/dynamic-routes-details
+  const pages = slugs
+    .map((slug) => getPageBySlug(slug, fields))
+    .map((page) => page.slug.split('/'));
 
   return pages;
 };
