@@ -23,15 +23,17 @@ test('it lists the pages from the _pages dir', () => {
 });
 
 test('it returns an object containing the markdown content', () => {
-  const page = getPageBySlug('portfolio', ['title', 'content']);
+  const page = getPageBySlug('test-page', ['title', 'content']);
 
-  expect(page.title).toEqual('Portfolio');
+  expect(page.title).toEqual('Test Page');
   expect(page.content).not.toEqual('');
 });
 
 test('it returns an array of objects containing the slug property', () => {
-  const pages = getAllPages(['slug']);
+  const pages = getAllPages(['slug', 'title', 'excerpt']);
 
   expect(pages).toEqual(expect.arrayContaining(pages));
   expect(pages[0]).toHaveProperty('slug');
+  expect(pages[0]).toHaveProperty('title');
+  expect(pages[0]).toHaveProperty('excerpt');
 });
