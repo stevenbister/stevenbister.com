@@ -7,6 +7,7 @@ import {
     Outlet,
     Scripts,
     ScrollRestoration,
+    useLoaderData,
 } from '@remix-run/react';
 
 import styles from './css/main.css';
@@ -50,10 +51,18 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader({ request }: LoaderArgs) {
-    return json({});
+    return json({
+        ENV: {
+            SANITY_PUBLIC_PROJECT_ID: process.env.SANITY_PUBLIC_PROJECT_ID,
+            SANITY_PUBLIC_DATASET: process.env.SANITY_PUBLIC_DATASET,
+            SANITY_PUBLIC_API_VERSION: process.env.SANITY_PUBLIC_API_VERSION,
+        },
+    });
 }
 
 export default function App() {
+    const { ENV } = useLoaderData<typeof loader>();
+
     return (
         <html lang="en">
             <head>
@@ -64,6 +73,11 @@ export default function App() {
                 />
                 <Meta />
                 <Links />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `document.ENV = ${JSON.stringify(ENV)}`,
+                    }}
+                />
             </head>
             <body className="t-font-primary">
                 <Outlet />

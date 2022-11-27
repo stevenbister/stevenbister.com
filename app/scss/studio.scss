@@ -1,0 +1,25 @@
+// Reset our studio so our custom styles don't make things look funky
+
+html {
+    background-color: #111;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+svg {
+    display: initial;
+    max-width: initial;
+
+    &:not(:root) {
+        fill: none;
+    }
+}
