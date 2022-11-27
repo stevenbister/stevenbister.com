@@ -3,6 +3,7 @@ import { defineConfig, isDev } from 'sanity';
 import { deskTool } from 'sanity/desk';
 import { projectDetails } from '~/sanity/projectDetails';
 import { schemaTypes } from '~/sanity/schemas';
+import { defaultDocumentNode, structure } from '~/sanity/structure';
 
 const settings = projectDetails();
 
@@ -19,7 +20,10 @@ export default defineConfig({
     title: 'stevenbister.com',
     basePath: '/studio',
 
-    plugins: [deskTool(), ...(isDev ? devOnlyPlugins : [])],
+    plugins: [
+        deskTool({ structure, defaultDocumentNode }),
+        ...(isDev ? devOnlyPlugins : []),
+    ],
 
     schema: {
         types: schemaTypes,

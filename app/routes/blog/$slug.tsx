@@ -1,39 +1,35 @@
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import PortableText from '~/components/PortableText';
-import getPageData from '~/models/sanity.server';
+import { PreviewSuspense } from '@sanity/preview-kit';
+import PostContent, { PostPreview } from '~/components/Post';
+import { getClient } from '~/sanity/client';
+import { getSession } from '~/session';
 
-interface PageData {
-    page: any; // TODO: Type this maybe zod? 👀
-    isPreview: boolean;
-}
-
-export const loader: LoaderFunction = async ({ request, params }) => {
-    if (!params.slug) throw new Error('Missing slug');
+export const loader = async ({ request, params }: LoaderArgs) => {
+    const session = await getSession(request.headers.get('Cookie'));
+    const token = session.get('token');
+    const isPreview = Boolean(token);
 
     const POST_QUERY = `
-        *[ _type == "post" && slug.current == $slug ] {
+        *[ _type == "post" && slug.current == $slug ][0] {
             _id,
-            _rev,
-            _type,
             title,
+            "slug": slug.current,
             publishedAt,
-            categories[]->{
-                title
-            },
+            "categories": categories[]->title,
             body
         }
     `;
 
     // Query the page data
-    const data = await getPageData({
-        request,
-        params,
-        query: POST_QUERY,
-    });
+    const post = await getClient(isPreview)
+        .fetch(POST_QUERY, params)
+        .then((res) => {
+            return res ? res : null;
+        });
 
-    if (!data?.page) {
+    if (!post) {
         // const redirect = await shouldRedirect(request);
 
         // if (redirect) {
@@ -43,7 +39,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         throw new Response('Not found', { status: 404 });
     }
 
-    const { page: post, isPreview }: PageData = data;
     // const canonicalUrl = buildCanonicalUrl({
     //     canonical: post?.seo?.canonicalUrl,
     //     request
@@ -52,30 +47,28 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     return json({
         post,
         isPreview,
-        // canonicalUrl,
         query: isPreview ? POST_QUERY : null,
+        params: isPreview ? params : null,
+        // Note: This makes the token available to the client if they have an active session
+        // This is useful to show live preview to unauthenticated users
+        // If you would rather not, replace token with `null` and it will rely on your Studio auth
+        token: isPreview ? token : null,
+        // canonicalUrl,
+        // query: isPreview ? POST_QUERY : null,
     });
 };
 
 export default function Post() {
-    const { post } = useLoaderData<typeof loader>();
-    const { title, body, categories, publishedAt } = post;
+    const { post, isPreview, query, params, token } =
+        useLoaderData<typeof loader>();
 
-    const hasCategories = categories && categories.length > 0;
-    const published = new Date(publishedAt).toLocaleDateString('en-GB');
+    if (isPreview && query && params && token) {
+        return (
+            <PreviewSuspense fallback={<PostContent {...post} />}>
+                <PostPreview query={query} params={params} token={token} />
+            </PreviewSuspense>
+        );
+    }
 
-    return (
-        <main>
-            <div className="o-container o-container--xsmall">
-                <h1>{title}</h1>
-                <p>Published: {published}</p>
-
-                {hasCategories
-                    ? categories.map((category) => category.title)
-                    : null}
-
-                <PortableText value={body} />
-            </div>
-        </main>
-    );
+    return <PostContent {...post} />;
 }
