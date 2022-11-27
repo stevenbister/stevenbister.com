@@ -1,0 +1,12 @@
+@use '../tokens' as *;
+@use '../tools/functions/get' as *;
+
+@mixin font-size($font-size, $line-height: false) {
+    font-size: var(--scale-#{$font-size});
+
+    @if $line-height {
+        line-height: $line-height;
+    } @else {
+        line-height: get('line-height', $typography);
+    }
+}

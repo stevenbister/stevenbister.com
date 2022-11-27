@@ -1,0 +1,51 @@
+@use '../settings' as s;
+
+// *----------------------------------*\
+//  #LISTS
+// *----------------------------------*/
+//
+// Extends Reset to list elements
+//
+// *----------------------------------*/
+
+ul[class],
+ol[class] {
+    list-style: none;
+}
+
+li {
+    list-style: inherit;
+
+    &:not([class]) {
+        margin: 0 0 var(--scale-zeta);
+    }
+
+    /*
+    * 1. Add zero-width-space to prevent VoiceOver disable
+    * 2. Absolute position ensures no extra space
+    * See: https://unfetteredthoughts.net/2017/09/26/voiceover-and-list-style-type-none/
+    */
+    nav &::before {
+        position: absolute;
+        content: '\200B';
+    }
+}
+
+dl {
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+dt,
+dd {
+    display: inline-block;
+}
+
+dt {
+    font-weight: normal;
+}
+
+dd {
+    padding: 0 0 0 40px;
+    margin: 0;
+}

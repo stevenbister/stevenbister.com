@@ -1,0 +1,73 @@
+$colors: (
+    default: (
+        base: #fff,
+        light: #fff,
+        dark: #000,
+    ),
+);
+
+// Tokenised values for the fluid scale: https://www.fluid-type-scale.com/calculate
+$fluid-scale: (
+    // This should match the default font size in the root.
+    // e.g. if you are the font-size: 62.5% then this should be 10.
+    base-font-size: 16,
+    // Set the step we want to use as the base for the scale
+    base-index: 'zeta',
+    steps: (
+        'micro',
+        'milli',
+        'centi',
+        'zeta',
+        'epsilon',
+        'delta',
+        'gamma',
+        'beta',
+        'alpha',
+        'omega',
+        'kilo',
+        'mega'
+    ),
+    min-viewport: (
+        width: 400,
+        font-size: 16,
+        // "base font will go no lower than this value"
+        scale: 1.25,
+    ),
+    max-viewport: (
+        width: 1280,
+        font-size: 18,
+        // "Base font will go no higher than this value"
+        scale: 1.33,
+    )
+);
+
+// Typographic settings
+$typography: (
+    font-primary: (
+        'Inter',
+        helvetica,
+        arial,
+        sans-serif,
+    ),
+    weight-reg: 400,
+    weight-bold: 600,
+    line-height: 1.2,
+);
+
+// Containers and global widths
+$global-base-width: 1440;
+$containers: (
+    container-size-xsm: 1020,
+    container-size-sm: 1140,
+    container-size-md: 1280,
+    container-size-lg: 1680,
+);
+
+// Media queries
+$breakpoints: (
+    bp-xs: 320,
+    bp-sm: 480,
+    bp-md: 768,
+    bp-lg: 1024,
+    bp-xl: 1280,
+);

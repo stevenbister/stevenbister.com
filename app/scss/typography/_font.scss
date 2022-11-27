@@ -1,0 +1,252 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '../tokens' as *;
+@use '../settings' as *;
+@use '../tools/functions/get' as *;
+@use '../tools/fluid-scale' as *;
+@use '../tools/font-size' as *;
+
+@font-face {
+    font-display: swap;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+    src: url('/fonts/Inter/Inter-Bold.woff2') format('woff2'),
+        url('/fonts/Inter/Inter-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 900;
+    src: url('/fonts/Inter/Inter-Black.woff2') format('woff2'),
+        url('/fonts/Inter/Inter-Black.woff') format('woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/Inter/Inter-Regular.woff2') format('woff2'),
+        url('/fonts/Inter/Inter-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/Inter/Inter-Light.woff2') format('woff2'),
+        url('/fonts/Inter/Inter-Light.woff') format('woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    src: url('/fonts/Inter/Inter-Medium.woff2') format('woff2'),
+        url('/fonts/Inter/Inter-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    src: url('/fonts/Inter/Inter-SemiBold.woff2') format('woff2'),
+        url('/fonts/Inter/Inter-SemiBold.woff') format('woff');
+}
+
+/* ============================
+// $FONT STYLES
+// Define our Font Elements/Classes.
+// We are able to utilise semantic H1-H6 but also override the presentation using the class convention
+*/
+
+/* ============================
+//  Usage:
+//
+// @param {*} elements - expects an element tag. recommended h1 - h6
+// @param {*} classes - expects desired class name, value matches values from the steps in our tokens file
+// @param {*} line-height - expects a line-height value
+// @param {*} vertial-spacing - expects desired vertical spacing, value matches values from the steps in our tokens file
+
+// Usage:
+// <h1 class="t-font-beta"></h1>
+*/
+
+$font-sizes: (
+    (
+        elements: (),
+        classes: (
+            'mega',
+        ),
+        line-height: 1,
+        vertical-spacing: (
+            'beta',
+        ),
+    ),
+    (
+        elements: (),
+        classes: (
+            'kilo',
+        ),
+        line-height: 1.1,
+    ),
+    (
+        elements: (),
+        classes: (
+            'omega',
+        ),
+        line-height: 1.1,
+    ),
+    (
+        elements: (
+            h1,
+        ),
+        classes: (
+            'alpha',
+        ),
+    ),
+    (
+        elements: (
+            h2,
+        ),
+        classes: (
+            'beta',
+        ),
+    ),
+    (
+        elements: (
+            h3,
+        ),
+        classes: (
+            'gamma',
+        ),
+    ),
+    (
+        elements: (
+            h4,
+        ),
+        classes: (
+            'delta',
+        ),
+    ),
+    (
+        elements: (
+            h5,
+        ),
+        classes: (
+            'epsilon',
+        ),
+    ),
+    (
+        elements: (
+            body,
+            h6,
+        ),
+        classes: (
+            'zeta',
+        ),
+    ),
+    (
+        elements: (),
+        classes: (
+            'centi',
+        ),
+    ),
+    (
+        elements: (),
+        classes: (
+            'milli',
+        ),
+    ),
+    (
+        elements: (),
+        classes: (
+            'micro',
+        ),
+    )
+);
+$font-families: (
+    'primary': $font-primary,
+);
+
+:root {
+    @include fluid-scale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[class*='t-font'] {
+    margin: 0 0 var(--scale-zeta);
+    font-style: normal;
+    text-transform: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: $weight-bold;
+}
+
+// Font Family
+.t-font {
+    @each $name, $font-family in $font-families {
+        &-#{$name} {
+            font-family: $font-family;
+
+            @if $name == 'secondary' {
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+// Font Sizes
+@each $rule in $font-sizes {
+    $elements: get('elements', $rule);
+    $classes: get('classes', $rule);
+
+    @each $element in $elements {
+        @each $class in $classes {
+            #{$element} {
+                @if map.has-key($rule, 'line-height') {
+                    @include font-size($class, get('line-height', $rule));
+                } @else {
+                    @include font-size($class);
+                }
+
+                @if map.has-key($rule, 'vertical-spacing') {
+                    margin-bottom: var(
+                        --scale-#{get('vertical-spacing', $rule)}
+                    );
+                }
+            }
+        }
+    }
+
+    @each $class in $classes {
+        .t-font-#{$class} {
+            @if map.has-key($rule, 'line-height') {
+                @include font-size($class, get('line-height', $rule));
+            } @else {
+                @include font-size($class);
+            }
+
+            @if map.has-key($rule, 'vertical-spacing') {
+                margin-bottom: var(--scale-#{get('vertical-spacing', $rule)});
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+/* stylelint-disable scss/double-slash-comment-whitespace-inside */
+@use '../tools/functions/get' as *;
+@use '../tokens' as *;
+
+///*----------------------------------*\
+//  #TYPOGRAPHY SETTINGS
+//\*----------------------------------*/
+//
+//  Set the Typography scales for your site inc. Font Sizes/Weights/Styles
+//  Uses Modular Scale as defined in settings/global
+//  The defined Modular Scale calculates your font sizes based on your $base-font-size and $global-scale-ratio
+//  e.g.
+//  $global-scale-ratio: 1.33;
+//  $size-alpha: round(50 * 1.33) = 66.5 | 65px | 6.5rem
+//
+//  The Sizes are calculated on the previous size defined in the hierarchy
+//  e.g. $size-beta will be passed in to determine the outcome of $size-alpha
+//  These values can of course be overridden;
+//  e.g.
+//  $size-alpha: _fs($size-beta) ...... could also be: $size-alpha: 50;
+//
+//  Ref: https://medium.com/codyhouse/create-your-design-system-part-1-typography-7c630d9092bd
+//
+//\*----------------------------------*/
+
+$font-primary: get('font-primary', $typography);
+$weight-reg: get('weight-reg', $typography);
+$weight-bold: get('weight-bold', $typography);
+
+// Base Sizes
+$base-font-size: get('base-font-size', $fluid-scale);
+$base-line-height: get('max-viewport.scale', $fluid-scale);

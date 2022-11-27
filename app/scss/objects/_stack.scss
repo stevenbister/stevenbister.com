@@ -1,0 +1,29 @@
+@use '../settings' as s;
+
+/* ============================
+// $STACK
+//
+// Injects a vertical rhythm into the page by applying a margin to the bottom of the element.
+//
+// @see https://every-layout.dev/layouts/stack/
+*/
+
+/* ============================
+//  Usage:
+//
+//  <div class="o-stack"> ... </div>
+*/
+
+.o-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    > * {
+        margin-block: 0;
+    }
+
+    > * + * {
+        margin-block-start: var(--space, var(--scale-zeta));
+    }
+}

@@ -1,0 +1,48 @@
+// *----------------------------------*\
+//  #TYPE
+// *----------------------------------*/
+//
+// Basic Typography styles
+//
+// *----------------------------------*/
+
+p {
+    margin: 0 0 var(--scale-zeta);
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+
+    &,
+    &:active,
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+small {
+    font-size: var(--scale-micro);
+}
+
+input,
+select,
+textarea {
+    font-size: var(--scale-zeta);
+}
+
+a[href],
+button,
+input,
+select,
+textarea {
+    &:focus {
+        /* stylelint-disable-next-line declaration-colon-newline-after */
+        box-shadow: 0 0 0 0.5rem var(--colour-tertiary),
+            0 0 0 0.75rem var(--color-primary); /* outline color here */
+
+        &:not(:focus-visible) {
+            box-shadow: none;
+        }
+    }
+}

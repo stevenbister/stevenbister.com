@@ -1,0 +1,25 @@
+{
+    "extends": [
+        "stylelint-config-standard",
+        "stylelint-config-idiomatic-order",
+        "stylelint-config-prettier",
+        "stylelint-config-standard-scss"
+    ],
+    "plugins": ["stylelint-prettier"],
+    "rules": {
+        "indentation": 4,
+        "color-hex-case": "lower",
+        "declaration-colon-newline-after": null,
+        "string-quotes": "single",
+        "comment-no-empty": null,
+        "custom-property-pattern": null,
+        "max-line-length": [
+            120,
+            {
+                "ignore": "non-comments"
+            }
+        ],
+        "scss/comment-no-empty": null,
+        "prettier/prettier": true
+    }
+}

@@ -1,0 +1,10 @@
+node_modules
+
+/server/build
+/public/build
+preferences.arc
+.env
+
+/app/css
+
+/netlify/functions/server

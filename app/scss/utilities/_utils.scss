@@ -1,0 +1,148 @@
+@use '../tools' as *;
+@use '../tokens' as *;
+
+// *----------------------------------*\
+//  #UTILITIES
+// *----------------------------------*/
+//
+//  A collection of utilities that allow for quickly applying small styling tweaks to components.
+//  NOTE: Use Sparingly.
+//
+// *----------------------------------*/
+//
+// Usage:
+// <div class="u-mt-10"></div>
+
+$properties: (
+    (
+        property: 'margin',
+        prefix: 'm',
+        value: (),
+    ),
+    (
+        property: 'margin-top',
+        prefix: 'mt',
+        value: (
+            10px,
+            20px,
+        ),
+    ),
+    (
+        property: 'margin-right',
+        prefix: 'mr',
+        value: (),
+    ),
+    (
+        property: 'margin-bottom',
+        prefix: 'mb',
+        value: (),
+    ),
+    (
+        property: 'margin-left',
+        prefix: 'ml',
+        value: (),
+    ),
+    (
+        property: 'padding',
+        prefix: 'p',
+        value: (),
+    ),
+    (
+        property: 'padding-top',
+        prefix: 'pt',
+        value: (),
+    ),
+    (
+        property: 'padding-right',
+        prefix: 'pr',
+        value: (),
+    ),
+    (
+        property: 'padding-bottom',
+        prefix: 'pb',
+        value: (),
+    ),
+    (
+        property: 'padding-left',
+        prefix: 'pl',
+        value: (),
+    ),
+    (
+        property: 'font-weight',
+        prefix: 'fw',
+        value: (
+            300,
+            400,
+            500,
+            600,
+            700,
+        ),
+    ),
+    (
+        property: 'font-style',
+        prefix: 'fs',
+        value: (
+            italic,
+        ),
+    ),
+    (
+        property: 'text-align',
+        prefix: 'ta',
+        value: (
+            left,
+            right,
+            center,
+        ),
+    )
+);
+
+@each $property in $properties {
+    $property-name: get('property', $property);
+    $property-prefix: get('prefix', $property);
+    $property-values: get('value', $property);
+
+    @each $value in $property-values {
+        .u-#{$property-prefix}-#{strip-unit($value)} {
+            #{$property-name}: #{$value};
+        }
+    }
+}
+
+// Generate classes for each custom property in _tokens.colors
+@each $name, $value in get(default, $colors) {
+    .u-color-#{$name} {
+        color: var(--color-#{$name});
+    }
+    .u-bg-color-#{$name} {
+        background-color: var(--color-#{$name});
+    }
+}
+
+// Generate classes for custom line-heights
+$line-height: (
+    '1': 1,
+    '1-25': 1.25,
+    '1-33': 1.33,
+    '1-5': 1.5,
+    '1-75': 1.75,
+);
+
+@each $l-class, $l-unit in $line-height {
+    .u-lh-#{$l-class} {
+        line-height: #{$l-unit};
+    }
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.sr-only:not(:focus, :active) {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}

@@ -1,0 +1,47 @@
+@use '../tools' as *;
+@use '../tokens' as *;
+
+.o-container {
+    $padding: var(--scale-centi);
+    $padding-alt: var(--scale-epsilon);
+
+    width: 100%;
+    max-width: rem($global-base-width);
+    padding-right: $padding;
+    padding-left: $padding;
+    margin-right: auto;
+    margin-left: auto;
+
+    &--flush {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    &--xsmall {
+        max-width: calc(
+            #{get('container-size-xsm', $containers) * 1px} + #{$padding-alt}
+        );
+    }
+
+    &--small {
+        max-width: calc(
+            #{get('container-size-sm', $containers) * 1px} + #{$padding}
+        );
+    }
+
+    &--medium {
+        max-width: calc(
+            #{get('container-size-md', $containers) * 1px} + #{$padding}
+        );
+    }
+
+    &--large {
+        max-width: calc(
+            #{get('container-size-lg', $containers) * 1px} + #{$padding}
+        );
+    }
+
+    &--full {
+        max-width: 100%;
+    }
+}
