@@ -32,11 +32,11 @@ export default function PostContent(props: Props) {
     );
 }
 
-type PreviewProps = {
+interface PreviewProps {
     query: string;
     params: { [key: string]: string };
     token: string | null;
-};
+}
 
 const { projectId, dataset } = projectDetails();
 const usePreview = definePreview({ projectId, dataset });
