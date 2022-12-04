@@ -13,11 +13,10 @@ export async function resolvePreviewUrl(
         window?.location?.hostname === 'localhost' ? window.origin : remoteUrl;
     const previewUrl = new URL('/resource/preview', baseUrl);
 
-    if (!doc?.slug?.current) {
-        return previewUrl.toString();
-    }
+    // Sets the search params to the current page slug if it exists
+    if (doc?.slug?.current)
+        previewUrl.searchParams.set('slug', doc.slug.current);
 
-    previewUrl.searchParams.set('slug', doc.slug.current);
     const secret = await getSecret(client, SECRET_ID, true);
 
     if (secret) {

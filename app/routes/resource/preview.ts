@@ -2,6 +2,7 @@ import type { ActionFunction, LoaderArgs } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node'; // or cloudflare/deno
 import { previewClient } from '~/sanity/client';
 import { getSecret, SECRET_ID } from '~/sanity/structure/getSecret';
+import { getPath } from '~/sanity/utils';
 
 import { commitSession, destroySession, getSession } from '~/session';
 
@@ -31,9 +32,8 @@ export const loader = async ({ request }: LoaderArgs) => {
     // Check the URL has a valid ?slug param
     const slug = requestUrl.searchParams.get('slug');
 
-    if (!slug) {
-        return new Response('No slug in URL', { status: 401 });
-    }
+    // Assume we're looking at the homepage if slug is null
+    const isHome = !slug;
 
     // Check the URL has a ?secret param
     const secret = requestUrl.searchParams.get('secret');
@@ -43,10 +43,11 @@ export const loader = async ({ request }: LoaderArgs) => {
     }
 
     // Confirm the passed-in slug actually exists
-    const validSlug = await previewClient.fetch(
-        `*[_type == "post" && slug.current == $slug][0].slug.current`,
-        { slug },
-    );
+    const validSlug = isHome
+        ? await getPath(`*[ _type == "home" ][0]`)
+        : await getPath(`*[slug.current == $slug][0]`, {
+              slug,
+          });
 
     if (!validSlug) {
         return new Response('Invalid slug', { status: 401 });
@@ -62,8 +63,7 @@ export const loader = async ({ request }: LoaderArgs) => {
     const session = await getSession(request.headers.get('Cookie'));
     session.set(`token`, process.env.SANITY_READ_TOKEN);
 
-    // TODO: This should be more dynamic
-    return redirect(`/blog/${validSlug}`, {
+    return redirect(validSlug, {
         headers: {
             'Set-Cookie': await commitSession(session),
         },
