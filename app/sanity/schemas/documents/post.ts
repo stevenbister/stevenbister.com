@@ -4,11 +4,23 @@ export default defineType({
     name: 'post',
     title: 'Post',
     type: 'document',
+    groups: [
+        {
+            default: true,
+            name: 'content',
+            title: 'Content',
+        },
+        {
+            name: 'seo',
+            title: 'SEO',
+        },
+    ],
     fields: [
         defineField({
             name: 'title',
             title: 'Title',
             type: 'string',
+            group: 'content',
         }),
         defineField({
             name: 'slug',
@@ -18,6 +30,7 @@ export default defineType({
                 source: 'title',
                 maxLength: 96,
             },
+            group: 'content',
         }),
         defineField({
             name: 'mainImage',
@@ -26,22 +39,32 @@ export default defineType({
             options: {
                 hotspot: true,
             },
+            group: 'content',
         }),
         defineField({
             name: 'categories',
             title: 'Categories',
             type: 'array',
             of: [{ type: 'reference', to: { type: 'category' } }],
+            group: 'content',
         }),
         defineField({
             name: 'publishedAt',
             title: 'Published at',
             type: 'datetime',
+            group: 'content',
         }),
         defineField({
             name: 'body',
             title: 'Body',
             type: 'blockContent',
+            group: 'content',
+        }),
+        defineField({
+            name: 'seo',
+            title: 'SEO',
+            type: 'seo',
+            group: 'seo',
         }),
     ],
 

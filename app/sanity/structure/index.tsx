@@ -1,4 +1,4 @@
-import { FileIcon, HomeIcon } from '@radix-ui/react-icons';
+import { FileIcon, GearIcon, HomeIcon } from '@radix-ui/react-icons';
 import Iframe from 'sanity-plugin-iframe-pane';
 import type {
     DefaultDocumentNodeResolver,
@@ -27,6 +27,11 @@ export const structure: StructureResolver = (S) =>
                 .icon(FileIcon)
                 .title('Categories'),
             S.divider(),
+            S.documentListItem()
+                .schemaType('settings')
+                .icon(GearIcon)
+                .id('settings')
+                .title('Settings'),
         ]);
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (
@@ -62,6 +67,9 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
                     })
                     .title('Preview'),
             ]);
+
+        case `settings`:
+            return S.document().views([S.view.form()]);
 
         default:
             return S.document().views([S.view.form()]);
