@@ -7,6 +7,7 @@ import {
     Outlet,
     Scripts,
     ScrollRestoration,
+    useCatch,
     useLoaderData,
 } from '@remix-run/react';
 
@@ -60,7 +61,13 @@ export async function loader({ request }: LoaderArgs) {
     });
 }
 
-export default function App() {
+function Document({
+    children,
+    title,
+}: {
+    children: React.ReactNode;
+    title?: string;
+}) {
     const { ENV } = useLoaderData<typeof loader>();
 
     return (
@@ -71,6 +78,7 @@ export default function App() {
                     name="viewport"
                     content="width=device-width,initial-scale=1"
                 />
+                <title>{title}</title>
                 <Meta />
                 <Links />
                 <script
@@ -80,11 +88,39 @@ export default function App() {
                 />
             </head>
             <body className="t-font-primary">
-                <Outlet />
+                {children}
                 <ScrollRestoration />
                 <Scripts />
                 <LiveReload />
             </body>
         </html>
+    );
+}
+
+export default function App() {
+    return (
+        <Document>
+            <Outlet />
+        </Document>
+    );
+}
+
+export function CatchBoundary() {
+    const caught = useCatch();
+
+    return (
+        <Document title={`${caught.status} ${caught.statusText}`}>
+            {caught.status} {caught.statusText}
+        </Document>
+    );
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+    console.error(error);
+    return (
+        <Document title={'Uh oh!'}>
+            <h1>Something went wrong!</h1>
+            <pre>{error.message}</pre>
+        </Document>
     );
 }
