@@ -3,12 +3,10 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { PreviewSuspense } from '@sanity/preview-kit';
 import PostContent, { PostPreview } from '~/components/Post';
-import { getClient } from '~/sanity/client';
-import { getSession } from '~/session';
+import { getPageData, getToken } from '~/models/sanity.server';
 
 export const loader = async ({ request, params }: LoaderArgs) => {
-    const session = await getSession(request.headers.get('Cookie'));
-    const token = session.get('token');
+    const token = await getToken(request);
     const isPreview = Boolean(token);
 
     const POST_QUERY = `
@@ -22,22 +20,11 @@ export const loader = async ({ request, params }: LoaderArgs) => {
         }
     `;
 
-    // Query the page data
-    const post = await getClient(isPreview)
-        .fetch(POST_QUERY, params)
-        .then((res) => {
-            return res ? res : null;
-        });
-
-    if (!post) {
-        // const redirect = await shouldRedirect(request);
-
-        // if (redirect) {
-        //     return redirect;
-        // } else {
-        // }
-        throw new Response('Not found', { status: 404 });
-    }
+    const post = await getPageData({
+        query: POST_QUERY,
+        params,
+        isPreview,
+    });
 
     // const canonicalUrl = buildCanonicalUrl({
     //     canonical: post?.seo?.canonicalUrl,
@@ -54,7 +41,6 @@ export const loader = async ({ request, params }: LoaderArgs) => {
         // If you would rather not, replace token with `null` and it will rely on your Studio auth
         token: isPreview ? token : null,
         // canonicalUrl,
-        // query: isPreview ? POST_QUERY : null,
     });
 };
 
