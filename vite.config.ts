@@ -14,10 +14,10 @@ export default defineConfig({
 			},
 			adapter: adapter(),
 			preprocess: [mdsvex({ extensions: ['.svx', '.md'] })],
-      extensions: ['.svelte', '.svx', '.md'],
-      alias: {
+			extensions: ['.svelte', '.svx', '.md'],
+			alias: {
 				$: 'src',
-        $styles: 'src/styles',
+				$styles: 'src/styles',
 				$content: 'src/content'
 			}
 		})
