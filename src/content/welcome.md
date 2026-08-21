@@ -1,0 +1,7 @@
+---
+title: Welcome
+---
+
+# Welcome to SvelteKit
+
+Visit [svelte.dev/docs/kit](https://svelte.dev/docs/kit) to read the documentation
