@@ -1,4 +1,13 @@
 @import 'open-props/palette';
+@import 'open-props/durations';
+
+@font-face {
+	font-family: 'Cairo Play';
+	src: url('/fonts/CairoPlay-VariableFont_slnt,wght.ttf') format('truetype-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
 
 :root {
 	--palette-hue: 241;
@@ -10,6 +19,9 @@
 	--surface-light: var(--color-2);
 	--surface-dark: var(--color-14);
 
+	--accent-light: var(--color-4);
+	--accent-dark: var(--color-13);
+
 	--text-light: var(--color-14);
 	--text-dark: var(--color-2);
 }
@@ -17,11 +29,13 @@
 :root {
 	--surface: var(--surface-light);
 	--text: var(--text-light);
+	--accent: var(--accent-light);
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
 		--surface: var(--surface-dark);
 		--text: var(--text-dark);
+		--accent: var(--accent-dark);
 	}
 }

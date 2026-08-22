@@ -1,3 +1,7 @@
+:root {
+	view-transition-name: root;
+}
+
 html,
 body {
 	height: 100%;
@@ -8,9 +12,47 @@ body {
 body {
 	background-color: var(--surface);
 	color: var(--text);
-	font-family: sans-serif;
+	font-family: var(--font-humanist);
 	font-weight: var(--font-weight-4);
 	font-size: var(--font-size-2);
 	display: flex;
 	flex-direction: column;
+}
+
+a {
+	color: inherit;
+
+	&:visited {
+		color: inherit;
+	}
+}
+
+.prose {
+	max-width: 80ch;
+
+	> * + * {
+		margin-block-start: var(--size-4);
+	}
+
+	h2,
+	h3,
+	h4 {
+		+ p,
+		+ ul {
+			margin-block-start: var(--size-2);
+		}
+	}
+}
+
+hr {
+	border: var(--border-size-1) solid var(--accent);
+	border-bottom-width: 0;
+}
+
+@media (prefers-reduced-motion) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
 }
